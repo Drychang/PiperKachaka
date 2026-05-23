@@ -1,0 +1,41 @@
+<mujoco model="combined_scene">
+  <compiler angle="radian"/>
+
+  <include file="kachaka_description/kachaka.xml"/>
+  <include file="piper_description/piper.xml"/>
+
+  <statistic center="0 0 0.1" extent="0.5"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+    
+    <!-- Visual Target (Mocap Body) - Global coordinates approx relative to Piper Base (z=0.4) -->
+    <body name="target" mocap="true" pos="0.2 0.3 0.4" quat="0 0 1 0 ">
+        <geom type="box" size="0.02 0.02 0.02" rgba="1 1 1 0.2" contype="0" conaffinity="0"/>
+        <!-- RGB Axes -->
+        <site type="cylinder" fromto="0 0 0 0.1 0 0" size="0.002" rgba="1 0 0 1"/> 
+        <site type="cylinder" fromto="0 0 0 0 0.1 0" size="0.002" rgba="0 1 0 1"/> 
+        <site type="cylinder" fromto="0 0 0 0 0 0.1" size="0.002" rgba="0 0 1 1"/> 
+    </body>
+  </worldbody>
+
+  <equality>
+    <!-- Weld Piper (child) to Kachaka (parent) with a 40cm vertical offset -->
+    <!-- relpose="0 0 0.4 1 0 0 0" means Piper is 0.4m above Kachaka -->
+    <weld name="mount" body1="kachaka_base_link" body2="piper_base_link" relpose="0 0 0.4 1 0 0 0"/>
+  </equality>
+</mujoco>

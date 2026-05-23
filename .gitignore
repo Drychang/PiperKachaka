@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual envs (note: .venv_ik lives outside this repo root, but ignore any local ones)
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# MuJoCo / runtime artifacts
+MUJOCO_LOG.TXT
+*.log
+logs/
+
+# Local data / experiment outputs
+*.npy
+*.npz
+*.pkl
+*.pt
+*.ckpt
